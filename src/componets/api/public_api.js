@@ -1,15 +1,20 @@
 import axios from "axios/index";
 
-const b = axios.create({
+export const b = axios.create({
   baseURL:
     "https://cors-anywhere.herokuapp.com/https://bittrex.com/api/v1.1/public/"
 });
-
+// export const bt = axios.create({
+//   baseURL:
+//     "https://cors-anywhere.herokuapp.com/https://bittrex.com/api/v1.1/public/",
+//   timeout: 10000
+// });
 // https://bittrex.com/api/v1.1/public/getmarkets
 export const getmarkets = () => {
   b.get(`getmarkets`)
     .then(response => {
-      console.log(response, "getmarkets");
+      // console.log(response, "getmarkets");
+      return response;
     })
     .catch(error => {
       console.log(error);
@@ -20,7 +25,8 @@ export const getmarkets = () => {
 export const getticker = (market = "BTC-LTC") => {
   b.get(`getticker?market=${market}`)
     .then(response => {
-      console.log(response, "getticker");
+      // console.log(response, "getticker");
+      return response;
     })
     .catch(error => {
       console.log(error);
@@ -31,10 +37,11 @@ export const getticker = (market = "BTC-LTC") => {
 // market	    required	a string literal for the market (ex: BTC-LTC)
 //https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-ltc
 
-export const getmarketsummaries = (market = "BTC-LTC") => {
-  b.get(`getmarketsummaries?market=${market}`)
+export const getmarketsummaries = () => {
+  b.get(`getmarketsummaries`)
     .then(response => {
-      console.log(response, "getmarketsummaries");
+      // console.log(response.data.result, "getmarketsummaries");
+      return response.data.result;
     })
     .catch(error => {
       console.log(error);
@@ -44,7 +51,8 @@ export const getmarketsummaries = (market = "BTC-LTC") => {
 export const getcurrencies = () => {
   b.get(`getcurrencies`)
     .then(response => {
-      console.log(response, "getcurrencies");
+      // console.log(response, "getcurrencies");
+      return response;
     })
     .catch(error => {
       console.log(error);
@@ -57,7 +65,8 @@ export const getcurrencies = () => {
 export const getorderbook = (market = "BTC-LTC", type = "both") => {
   b.get(`getorderbook?market=${market}&type=${type}`)
     .then(response => {
-      console.log(response, "getorderbook");
+      // console.log(response, "getorderbook");
+      return response;
     })
     .catch(error => {
       console.log(error);
@@ -70,7 +79,8 @@ export const getorderbook = (market = "BTC-LTC", type = "both") => {
 export const getmarkethistory = (market = "BTC-LTC") => {
   b.get(`getmarkethistory?market=${market}`)
     .then(response => {
-      console.log(response, "getmarkethistory");
+      // console.log(response, "getmarkethistory");
+      return response;
     })
     .catch(error => {
       console.log(error);
