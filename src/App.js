@@ -21,7 +21,7 @@ class App extends Component {
       <Fragment>
         <Vol />
         {/* <Index /> */}
-        {getmarketsummaries()}
+        {/* {getmarketsummaries()} */}
       </Fragment>
     );
   }
