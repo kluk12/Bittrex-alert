@@ -19,9 +19,16 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <Vol />
+        <Vol
+          render={({ loading, error, changevol, upchange, downchange }) => {
+            return (
+              <Fragment>
+                <h2>{loading.toString()}</h2>
+              </Fragment>
+            );
+          }}
+        />
         {/* <Index /> */}
-        {/* {getmarketsummaries()} */}
       </Fragment>
     );
   }

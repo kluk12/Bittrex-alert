@@ -1,14 +1,6 @@
 import React, { Component } from "react";
-import {
-  // getmarkethistory,
-  // getcurrencies,
-  // getmarkets,
-  // getmarketsummaries,
-  // getorderbook,
-  // getticker,
-  b
-} from "./../api/public_api";
-
+import { b } from "./../api/public_api";
+// response
 // "MarketName" : "BTC-888",
 // 			"High" : 0.00000919,
 // 			"Low" : 0.00000820,
@@ -23,16 +15,6 @@ import {
 // 			"PrevDay" : 0.00000821,
 // 			"Created" : "2014-03-20T06:00:00",
 // 			"DisplayMarketName" : null
-// let data = async getmarketsummaries => {
-//   const d = await getmarketsummaries();
-//   //    const{MarketName,Last,BaseVolume,Volume}=d;
-//   return d;
-// };
-// let last = data(getmarketsummaries);
-// export const marketVol = data => {
-//   const d = getmarketsummaries();
-//   return d;
-// };
 
 class Vol extends Component {
   constructor(props) {
@@ -42,20 +24,23 @@ class Vol extends Component {
       loading: true,
       error: null,
       v: [],
-      changevol: []
+      changevol: [],
+      upchange: 0,
+      downchange: 0
     };
   }
 
   componentDidMount = () => {
     this.api();
-    setInterval(this.api, 30000, () => {
+    setInterval(this.api, 10000, () => {
       this.setState({ loading: true });
     });
   };
+  // main apis func
   api = () => {
     b.get(`getmarketsummaries`)
       .then(response => {
-        console.log(response.data.result, "getmarketsummaries");
+        // console.log(response.data.result, "getmarketsummaries");
         this.setState({ Data: response.data.result, loading: false });
         return response;
       })
@@ -67,6 +52,7 @@ class Vol extends Component {
         this.setState({ error });
       });
   };
+  // lisner change
   change = () => {
     if (this.state.v.length < 2) return;
     this.setState(state => {
@@ -76,41 +62,42 @@ class Vol extends Component {
       let lastvol = vol[lengthv - 2],
         headvol = vol[lengthv - 1],
         b = [],
-        date1 = null,
-        date2 = null,
-        // m = [],
         prc;
 
       const [head] = headvol;
       const [last] = lastvol;
-      date1 = new Date(head[2].TimeStamp);
-      date2 = new Date(last[2].TimeStamp);
-      console.log(
-        date1 > date2, //false
-        date1 < date2, //true
-        date1 >= date2, //false
-        date1 <= date2 //true );
-      );
 
       for (let i in head) {
-        //procenty chyba sią źle
         prc = ((last[i].volBTC - head[i].volBTC) / head[i].volBTC) * 100;
-
         if (isNaN(prc)) prc = 0;
-        // m[i] = prc;
         b.push({
           MarketName: head[i].martet,
-          Procenty: parseFloat(prc.toFixed(2))
+          Procenty: parseFloat(prc.toFixed(2)),
+          TimeStamp: head[i].TimeStamp
         });
       }
-      //doribić max
-      // let max = Math.max(...m);
-      // console.log(max);
-      console.log(b);
-      return { changevol: b };
+      //up vol
+      const up = b.filter(element => {
+        if (element.Procenty === 0) {
+          return;
+        } else {
+          return element.Procenty >= 0.5 ? element : null;
+        }
+      });
+      const down = b.filter(element => {
+        if (element.Procenty === 0) {
+          return;
+        } else {
+          return element.Procenty <= -0.5 ? element : null;
+        }
+      });
+      console.log(up, "up");
+      console.log(down, "down");
+
+      return { changevol: b, upchange: up, downchange: down };
     });
   };
-
+  // skalp data
   marketVol = D => {
     this.setState(state => {
       const v = [...state.v];
@@ -126,21 +113,19 @@ class Vol extends Component {
 
       v.push([z]);
 
-      // console.log(v, v.length);
-      // console.log(a, a.length);
       return { v };
     });
-
-    // }
   };
 
   render() {
-    const { Data, loading, error, v, changevol } = this.state;
-    return (
-      <div>
-        {/* {this.props.render({ Data, loading, error, v, changevol })} */}
-      </div>
-    );
+    const { loading, error, changevol, upchange, downchange } = this.state;
+    return this.props.render({
+      loading,
+      error,
+      changevol,
+      upchange,
+      downchange
+    });
   }
 }
 export default Vol;
