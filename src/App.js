@@ -3,10 +3,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Index from "./componets/panel/Index";
 
 import Navbar from "./componets/panel/Navbar";
-import a from "./componets/panel/a";
-import b from "./componets/panel/b";
+
 import Vol from "./componets/vol/Vol";
-import { getmarketsummaries } from "./componets/api/public_api";
+
 // const routes = (
 //   <Route component={App}>
 //     <Route path="/" component={MainPage}/>
@@ -19,7 +18,7 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <Vol
+        {/* <Vol
           render={({ loading, error, changevol, upchange, downchange }) => {
             return (
               <Fragment>
@@ -27,8 +26,8 @@ class App extends Component {
               </Fragment>
             );
           }}
-        />
-        {/* <Index /> */}
+        /> */}
+        <Index />
       </Fragment>
     );
   }

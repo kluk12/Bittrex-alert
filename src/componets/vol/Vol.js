@@ -25,8 +25,9 @@ class Vol extends Component {
       error: null,
       v: [],
       changevol: [],
-      upchange: 0,
-      downchange: 0
+      upchange: [],
+      downchange: [],
+      Updown: []
     };
   }
 
@@ -57,6 +58,9 @@ class Vol extends Component {
     if (this.state.v.length < 2) return;
     this.setState(state => {
       const vol = [...state.v];
+      const downchange = [...state.downchange];
+      const upchange = [...state.upchange];
+      const updown = [...state.Updown];
 
       const lengthv = vol.length;
       let lastvol = vol[lengthv - 2],
@@ -81,20 +85,32 @@ class Vol extends Component {
         if (element.Procenty === 0) {
           return;
         } else {
-          return element.Procenty >= 0.5 ? element : null;
+          if (element.Procenty >= 1) {
+            updown.push(element);
+            upchange.push(element);
+          }
         }
       });
       const down = b.filter(element => {
         if (element.Procenty === 0) {
           return;
         } else {
-          return element.Procenty <= -0.5 ? element : null;
+          if (element.Procenty <= -1) {
+            updown.push(element);
+            downchange.push(element);
+          }
         }
       });
-      console.log(up, "up");
-      console.log(down, "down");
 
-      return { changevol: b, upchange: up, downchange: down };
+      // console.log(upchange, "up");
+      // console.log(downchange, "down");
+      // console.log(updown, "updown");
+      return {
+        changevol: b,
+        upchange: upchange,
+        downchange: downchange,
+        Updown: updown
+      };
     });
   };
   // skalp data
@@ -103,7 +119,7 @@ class Vol extends Component {
       const v = [...state.v];
 
       let z = [];
-      D.map(({ MarketName, Last, BaseVolume, Volume, TimeStamp }) => {
+      D.map(({ MarketName, Last, BaseVolume, Volume, TimeStamp, Updown }) => {
         z.push({
           volBTC: Volume * Last + BaseVolume,
           martet: MarketName,
@@ -118,14 +134,22 @@ class Vol extends Component {
   };
 
   render() {
-    const { loading, error, changevol, upchange, downchange } = this.state;
+    const {
+      loading,
+      error,
+      changevol,
+      upchange,
+      downchange,
+      Updown
+    } = this.state;
     return this.props.render({
       loading,
       error,
       changevol,
       upchange,
-      downchange
+      downchange,
+      Updown
     });
   }
 }
-export default Vol;
+export default React.memo(Vol);
