@@ -1,34 +1,46 @@
 import React from "react";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import { b } from "./../api/public_api";
+import Forms from "./forms/Index";
+import Index from "./Index";
+
 export const Routes = [
   {
     path: "/",
     exact: true,
-    sidebar: () => <div>home!</div>,
-    main: () => <h2>Home</h2>,
+    sidebar: () => <div>ALL ALERTS</div>,
+    main: () => <Index />,
     icon: () => {
       return <InboxIcon />;
     }
   },
   {
-    path: "/addalert",
-    sidebar: () => <div>bubblegum!</div>,
-    main: () => <h2>Bubblegum</h2>,
+    path: "/Addalert",
+    sidebar: () => <div>ADD ALERT</div>,
+    main: () => <Forms />,
     icon: () => {
       return <InboxIcon />;
     }
   },
   {
-    path: "/alert",
-    sidebar: () => <div>shoelaces!</div>,
-    main: () => {
-      return <div>shoelaces!</div>;
-    },
+    path: "/Favoritalert",
+    sidebar: () => <div>FAVORIT ALERTS</div>,
+    main: () => <Forms />,
     icon: () => {
       return <InboxIcon />;
     }
   }
+  // ,
+  // {
+  //   path: "/alert",
+  //   sidebar: () => <div>shoelaces!</div>,
+  //   main: () => {
+  //     return;
+  //   },
+  //   icon: () => {
+  //     return <InboxIcon />;
+  //   }
+  // }
 ];
 
 // main apis func

@@ -1,14 +1,12 @@
 import React, { Component, Fragment } from "react";
-import Navbar from "./Navbar";
-import Vol from "./../vol/Vol";
-import ListAlert from "./ListAlert";
-import Forms from "./forms/Forms";
+import Navbar from "../Navbar";
+import FavoritAlert from "./FavoritAlert";
+import Vol from "../../vol/Vol";
 
-class Index extends Component {
+export default class Index extends Component {
   render() {
     return (
       <Fragment>
-        {/* <Navbar /> */}
         <Navbar>
           <Vol
             render={({
@@ -20,14 +18,12 @@ class Index extends Component {
               Updown
             }) => {
               return (
-                <ListAlert Up={upchange} Down={downchange} Updown={Updown} />
+                <FavoritAlert Up={upchange} Down={downchange} Updown={Updown} />
               );
             }}
           />
         </Navbar>
-        {/* <Forms /> */}
       </Fragment>
     );
   }
 }
-export default Index;

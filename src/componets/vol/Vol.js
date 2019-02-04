@@ -30,10 +30,13 @@ class Vol extends Component {
       Updown: []
     };
   }
+  // componentWillUnmount = () => {
+  //   clearInterval();
+  // };
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     this.api();
-    setInterval(this.api, 10000, () => {
+    setInterval(await this.api, 10000, () => {
       this.setState({ loading: true });
     });
   };
@@ -66,6 +69,7 @@ class Vol extends Component {
       let lastvol = vol[lengthv - 2],
         headvol = vol[lengthv - 1],
         b = [],
+        // arr = [],
         prc;
 
       const [head] = headvol;
@@ -79,9 +83,10 @@ class Vol extends Component {
           Procenty: parseFloat(prc.toFixed(2)),
           TimeStamp: head[i].TimeStamp
         });
+        // console.log(`{name: '${head[i].martet}', value: '${head[i].martet}'},`);
       }
       //up vol
-      const up = b.filter(element => {
+      b.filter(element => {
         if (element.Procenty === 0) {
           return;
         } else {
@@ -90,17 +95,21 @@ class Vol extends Component {
             upchange.push(element);
           }
         }
-      });
-      const down = b.filter(element => {
-        if (element.Procenty === 0) {
-          return;
-        } else {
-          if (element.Procenty <= -1) {
-            updown.push(element);
-            downchange.push(element);
-          }
+        if (element.Procenty <= -1) {
+          updown.push(element);
+          downchange.push(element);
         }
       });
+      // b.filter(element => {
+      //   if (element.Procenty === 0) {
+      //     return;
+      //   } else {
+      //     if (element.Procenty <= -1) {
+      //       updown.push(element);
+      //       downchange.push(element);
+      //     }
+      //   }
+      // });
 
       // console.log(upchange, "up");
       // console.log(downchange, "down");

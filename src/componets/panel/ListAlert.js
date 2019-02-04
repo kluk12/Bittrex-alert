@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-
+import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
 import {
   FormControl,
   InputLabel,
@@ -96,6 +96,7 @@ class ListAlert extends Component {
               );
             })
           : null}
+        <ScrollUpButton EasingType="easeOutCubic" AnimationDuration={500} />;
       </div>
     );
   }

@@ -16,11 +16,13 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import TrendingUp from "@material-ui/icons/TrendingUp";
-import MailIcon from "@material-ui/icons/Mail";
+import HomeIcon from "@material-ui/icons/Home";
+import AddAlert from "@material-ui/icons/AddAlert";
+import NotificationsActive from "@material-ui/icons/NotificationsActive";
 import { Link } from "react-router-dom";
 import { Routes } from "./Route";
 import { Route, BrowserRouter } from "react-router-dom";
+import { red } from "@material-ui/core/colors";
 const drawerWidth = 240;
 class PersistentDrawerLeft extends React.Component {
   state = {
@@ -40,95 +42,93 @@ class PersistentDrawerLeft extends React.Component {
     const { open } = this.state;
 
     return (
-      <BrowserRouter>
-        <div className={classes.root}>
-          <CssBaseline />
-          <AppBar
-            position="fixed"
-            className={classNames(classes.appBar, {
-              [classes.appBarShift]: open
-            })}
-          >
-            <Toolbar disableGutters={!open}>
-              <IconButton
-                color="inherit"
-                aria-label="Open drawer"
-                onClick={this.handleDrawerOpen}
-                className={classNames(classes.menuButton, open && classes.hide)}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" color="inherit" noWrap>
-                {Routes.map((route, index) => (
-                  // Render more <Route>s with the same paths as
-                  // above, but different components this time.
-                  <Route
-                    key={index}
-                    path={route.path}
-                    exact={route.exact}
-                    component={route.sidebar}
-                  />
-                ))}
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <Drawer
-            className={classes.drawer}
-            variant="persistent"
-            anchor="left"
-            open={open}
-            classes={{
-              paper: classes.drawerPaper
-            }}
-          >
-            <div className={classes.drawerHeader}>
-              <IconButton onClick={this.handleDrawerClose}>
-                {theme.direction === "ltr" ? (
-                  <ChevronLeftIcon />
-                ) : (
-                  <ChevronRightIcon />
-                )}
-              </IconButton>
-            </div>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={classNames(classes.appBar, {
+            [classes.appBarShift]: open
+          })}
+        >
+          <Toolbar disableGutters={!open}>
+            <IconButton
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={this.handleDrawerOpen}
+              className={classNames(classes.menuButton, open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" noWrap>
+              {Routes.map((route, index) => (
+                // Render more <Route>s with the same paths as
+                // above, but different components this time.
+                <Route
+                  key={index}
+                  path={route.path}
+                  exact={route.exact}
+                  component={route.sidebar}
+                />
+              ))}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={this.handleDrawerClose}>
+              {theme.direction === "ltr" ? (
+                <ChevronLeftIcon />
+              ) : (
+                <ChevronRightIcon />
+              )}
+            </IconButton>
+          </div>
 
-            <List>
-              <Link to="/">
-                <ListItem button key={1}>
-                  <ListItemIcon>
-                    <MailIcon />
-                    {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
-                  </ListItemIcon>
-                  <ListItemText primary={"Home"} />
-                </ListItem>
-              </Link>
-              <Link to="/addalert">
-                <ListItem button key={1}>
-                  <ListItemIcon>
-                    <MailIcon />
-                    {/* {index % 2 === 0 ? <InboxIcon /> : } */}
-                  </ListItemIcon>
-                  <ListItemText primary={"ADD ALERT"} />
-                </ListItem>
-              </Link>
-              <Link to="/alert">
-                <ListItem button key={1}>
-                  <ListItemIcon>
-                    <MailIcon />
-                    {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
-                  </ListItemIcon>
-                  <ListItemText primary={"ALERTS"} />
-                </ListItem>
-              </Link>
-            </List>
-          </Drawer>
-          <main
-            className={classNames(classes.content, {
-              [classes.contentShift]: open
-            })}
-          >
-            <div className={classes.drawerHeader} />
-            {this.props.children}
-            {/* {Routes.map((route, index) => (
+          <List>
+            <Link to="/">
+              <ListItem button key={1}>
+                <ListItemIcon>
+                  <HomeIcon className={classes.icon} />
+                  {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
+                </ListItemIcon>
+                <ListItemText primary={"Home"} />
+              </ListItem>
+            </Link>
+            <Link to="/Addalert">
+              <ListItem button key={3}>
+                <ListItemIcon>
+                  <AddAlert className={classes.icon} />
+                  {/* {index % 2 === 0 ? <InboxIcon /> : } */}
+                </ListItemIcon>
+                <ListItemText primary={"ADD ALERT"} />
+              </ListItem>
+            </Link>
+            <Link to="/Favoritalert">
+              <ListItem button key={2}>
+                <ListItemIcon>
+                  <NotificationsActive className={classes.icon} />
+                </ListItemIcon>
+                <ListItemText primary={"FAVORIT ALLRETS"} />
+              </ListItem>
+            </Link>
+          </List>
+        </Drawer>
+        <main
+          className={classNames(classes.content, {
+            [classes.contentShift]: open
+          })}
+        >
+          <div className={classes.drawerHeader} />
+          {this.props.children}
+          {/* {Routes.map((route, index) => (
               // Render more <Route>s with the same paths as
               // above, but different components this time.
               <Route
@@ -138,9 +138,8 @@ class PersistentDrawerLeft extends React.Component {
                 component={route.main}
               />
             ))} */}
-          </main>
-        </div>
-      </BrowserRouter>
+        </main>
+      </div>
     );
   }
 }
@@ -204,6 +203,16 @@ const styles = theme => ({
       duration: theme.transitions.duration.enteringScreen
     }),
     marginLeft: 0
+  },
+  icon: {
+    margin: theme.spacing.unit * 2,
+
+    "&:hover": {
+      color: red[800]
+    }
+  },
+  iconHover: {
+    margin: theme.spacing.unit * 2
   }
 });
 
