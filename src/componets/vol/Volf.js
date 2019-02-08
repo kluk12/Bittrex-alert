@@ -30,7 +30,8 @@ class Vol extends Component {
       downchange: [],
       Updown: [],
       Favorite: [],
-      ff: []
+      ff: [],
+      i: true
     };
   }
   // componentWillUnmount = () => {
@@ -65,6 +66,8 @@ class Vol extends Component {
     if (this.state.v.length < 2) return;
     this.setState(state => {
       const vol = [...state.v];
+      const first = [...state.i];
+
       const downchange = [...state.downchange];
       const upchange = [...state.upchange];
       const updown = [...state.Updown];
@@ -94,13 +97,20 @@ class Vol extends Component {
       }
       //up vol
       b.filter((element, index) => {
-        const f = [...state.Favorite];
-
-        f.forEach(({ Marked, Change, Time }) => {
-          if (Marked === element.MarketName) {
-            fav.push({ Marked: Marked, Change: Change, Time: Time, id: index });
-          }
-        });
+        if (first) {
+          const f = [...state.Favorite];
+          f.forEach(({ Marked, Change, Time }) => {
+            //   console.log(Marked, Change, Time, index);
+            if (Marked === element.MarketName) {
+              fav.push({
+                Marked: Marked,
+                Change: Change,
+                Time: Time,
+                id: index
+              });
+            }
+          });
+        }
         if (element.Procenty === 0) {
           return;
         } else {
@@ -114,27 +124,18 @@ class Vol extends Component {
           downchange.push(element);
         }
       });
-      // b.filter(element => {
-      //   if (element.Procenty === 0) {
-      //     return;
-      //   } else {
-      //     if (element.Procenty <= -1) {
-      //       updown.push(element);
-      //       downchange.push(element);
-      //     }
-      //   }
-      // });
 
       // console.log(upchange, "up");
       // console.log(downchange, "down");
       //   console.log(updown, "updown");
-      console.log(fav, "fav");
+      //   console.log(fav, "fav");
       return {
         changevol: b,
         upchange: upchange,
         downchange: downchange,
         Updown: updown,
-        ff: fav
+        ff: fav,
+        i: false
       };
     });
   };
@@ -152,7 +153,7 @@ class Vol extends Component {
       }
     });
 
-    this.setState({ favorite: arr });
+    this.setState({ Favorite: arr });
   };
   // skalp data
 
