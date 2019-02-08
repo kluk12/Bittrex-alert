@@ -4,7 +4,8 @@ import Chips from "./Chips";
 import chips from "./Chips";
 import Snackbars from "./Snackbars";
 import { Market } from "./../forms/Data";
-import ListAlert from "../ListAlert";
+// import ListAlert from "../ListAlert";
+import ListFavorit from "./ListFavorit";
 
 export default class FavoritAlert extends Component {
   constructor(props) {
@@ -53,10 +54,9 @@ export default class FavoritAlert extends Component {
     const { favorite } = this.state;
     return (
       <Fragment>
-        {/* {console.log(Updown)} */}
         <Chips />
 
-        <ListAlert Updown={Updown} ComponetType="Favorits" />
+        <ListFavorit Updown={Updown} />
       </Fragment>
     );
   }

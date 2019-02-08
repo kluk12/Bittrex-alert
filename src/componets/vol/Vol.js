@@ -30,13 +30,13 @@ class Vol extends Component {
       Updown: []
     };
   }
-  // componentWillUnmount = () => {
-  //   clearInterval();
-  // };
+  componentWillUnmount = () => {
+    clearInterval(this.Interval);
+  };
 
   componentDidMount = async () => {
     this.api();
-    setInterval(await this.api, 20000, () => {
+    this.Interval = setInterval(await this.api, 20000, () => {
       this.setState({ loading: true });
     });
   };
