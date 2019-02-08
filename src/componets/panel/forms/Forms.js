@@ -23,6 +23,21 @@ class Forms extends Component {
       disabled: false
     };
   }
+
+  // const MyApp = withSnackbar(App);
+
+  // function IntegrationNotistack() {
+  //   return (
+  //     <SnackbarProvider maxSnack={3}>
+  //       <MyApp />
+  //     </SnackbarProvider>
+  //   );
+  // }
+
+  handleClickVariant = variant => () => {
+    // variant could be success, error, warning or info
+    this.props.enqueueSnackbar("fgdgd", { variant });
+  };
   render() {
     const { classes } = this.props;
     return (
@@ -34,7 +49,7 @@ class Forms extends Component {
             Time: 0
           }}
           onSubmit={Data => {
-            const key = Data.Marked.toString();
+            const key = Data.Marked;
             localStorage.setItem(key, JSON.stringify(Data));
           }}
           validate={values => {
@@ -158,6 +173,7 @@ class Forms extends Component {
                 </Grid>
                 <br />
                 <Button
+                  // onClick={this.handleClickVariant("dodano")}
                   type="submit"
                   className={classes.Button}
                   color="primary"

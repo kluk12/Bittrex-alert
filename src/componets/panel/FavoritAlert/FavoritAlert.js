@@ -1,13 +1,21 @@
 import React, { Component, Fragment } from "react";
 import { NameMarket } from "../forms/Data";
+import Chips from "./Chips";
+import chips from "./Chips";
+import Snackbars from "./Snackbars";
+import { Market } from "./../forms/Data";
+import ListAlert from "../ListAlert";
+
 export default class FavoritAlert extends Component {
   constructor(props) {
     super(props);
     this.state = {
       favorite: [],
-      i: false
+      i: false,
+      alert: []
     };
   }
+
   componentDidMount = async () => {
     this.LoadFavorites(NameMarket);
   };
@@ -19,6 +27,7 @@ export default class FavoritAlert extends Component {
 
     f.map(e => {
       val = localStorage.getItem(e.value);
+      val = JSON.parse(val);
       if (val) {
         arr.push(val);
       }
@@ -27,9 +36,28 @@ export default class FavoritAlert extends Component {
       ? this.setState({ favorite: arr, i: true })
       : this.setState({ favorite: arr });
   };
+
+  FindAlert = (d, f) => {
+    let arr = [];
+    d.filter(item => {
+      if (item.Market) return; //wymuśl filtrowanie
+    });
+    // console.log(updatedList);
+    this.setState(state => {
+      return { alert: arr };
+    });
+  };
+
   render() {
     const { classes, Up, Down, Updown } = this.props;
+    const { favorite } = this.state;
+    return (
+      <Fragment>
+        {/* {console.log(Updown)} */}
+        <Chips />
 
-    return <Fragment>{console.log(this.state.favorite)}</Fragment>;
+        <ListAlert Updown={Updown} ComponetType="Favorits" />
+      </Fragment>
+    );
   }
 }

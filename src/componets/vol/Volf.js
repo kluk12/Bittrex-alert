@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { b } from "./../api/public_api";
+import { NameMarket } from "../panel/forms/Data";
 // response
 // "MarketName" : "BTC-888",
 // 			"High" : 0.00000919,
@@ -27,7 +28,9 @@ class Vol extends Component {
       changevol: [],
       upchange: [],
       downchange: [],
-      Updown: []
+      Updown: [],
+      Favorite: [],
+      ff: []
     };
   }
   // componentWillUnmount = () => {
@@ -36,7 +39,8 @@ class Vol extends Component {
 
   componentDidMount = async () => {
     this.api();
-    setInterval(await this.api, 20000, () => {
+    this.LoadFavorites(NameMarket);
+    setInterval(await this.api, 10000, () => {
       this.setState({ loading: true });
     });
   };
@@ -69,7 +73,7 @@ class Vol extends Component {
       let lastvol = vol[lengthv - 2],
         headvol = vol[lengthv - 1],
         b = [],
-        // arr = [],
+        fav = [],
         prc;
 
       const [head] = headvol;
@@ -79,14 +83,24 @@ class Vol extends Component {
         prc = ((last[i].volBTC - head[i].volBTC) / head[i].volBTC) * 100;
         if (isNaN(prc)) prc = 0;
         b.push({
+          id: i,
           MarketName: head[i].martet,
           Procenty: parseFloat(prc.toFixed(2)),
           TimeStamp: head[i].TimeStamp
         });
-        // console.log(`{name: '${head[i].martet}', value: '${head[i].martet}'},`);
+        // console.log(
+        //   `{id:${i},name: '${head[i].martet}', value: '${head[i].martet}'},`
+        // );
       }
       //up vol
-      b.filter(element => {
+      b.filter((element, index) => {
+        const f = [...state.Favorite];
+
+        f.forEach(({ Marked, Change, Time }) => {
+          if (Marked === element.MarketName) {
+            fav.push({ Marked: Marked, Change: Change, Time: Time, id: index });
+          }
+        });
         if (element.Procenty === 0) {
           return;
         } else {
@@ -113,16 +127,35 @@ class Vol extends Component {
 
       // console.log(upchange, "up");
       // console.log(downchange, "down");
-      // console.log(updown, "updown");
+      //   console.log(updown, "updown");
+      console.log(fav, "fav");
       return {
         changevol: b,
         upchange: upchange,
         downchange: downchange,
-        Updown: updown
+        Updown: updown,
+        ff: fav
       };
     });
   };
+
+  LoadFavorites = f => {
+    if (this.state.i === true) return;
+    let val,
+      arr = [];
+
+    f.map(e => {
+      val = localStorage.getItem(e.value);
+      val = JSON.parse(val);
+      if (val) {
+        arr.push(val);
+      }
+    });
+
+    this.setState({ favorite: arr });
+  };
   // skalp data
+
   marketVol = D => {
     this.setState(state => {
       const v = [...state.v];
@@ -149,7 +182,8 @@ class Vol extends Component {
       changevol,
       upchange,
       downchange,
-      Updown
+      Updown,
+      Favorite
     } = this.state;
     return this.props.render({
       loading,
@@ -157,7 +191,8 @@ class Vol extends Component {
       changevol,
       upchange,
       downchange,
-      Updown
+      Updown,
+      Favorite
     });
   }
 }

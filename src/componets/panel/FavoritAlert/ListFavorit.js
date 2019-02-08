@@ -24,7 +24,7 @@ const styles = theme => ({
   }
 });
 
-class ListAlert extends Component {
+class ListFavorit extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -107,4 +107,4 @@ ListAlert.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ListAlert);
+export default withStyles(styles)(ListFavorit);
