@@ -22,7 +22,7 @@ import NotificationsActive from "@material-ui/icons/NotificationsActive";
 import { Link } from "react-router-dom";
 import { Routes } from "./Route";
 import { Route, BrowserRouter } from "react-router-dom";
-import { red } from "@material-ui/core/colors";
+import { red, grey } from "@material-ui/core/colors";
 const drawerWidth = 240;
 class PersistentDrawerLeft extends React.Component {
   state = {
@@ -50,7 +50,7 @@ class PersistentDrawerLeft extends React.Component {
             [classes.appBarShift]: open
           })}
         >
-          <Toolbar disableGutters={!open}>
+          <Toolbar disableGutters={!open} className={classes.dark}>
             <IconButton
               color="inherit"
               aria-label="Open drawer"
@@ -85,38 +85,56 @@ class PersistentDrawerLeft extends React.Component {
           <div className={classes.drawerHeader}>
             <IconButton onClick={this.handleDrawerClose}>
               {theme.direction === "ltr" ? (
-                <ChevronLeftIcon />
+                <ChevronLeftIcon className={classes.primary} />
               ) : (
-                <ChevronRightIcon />
+                <ChevronRightIcon className={classes.primary} />
               )}
             </IconButton>
           </div>
 
           <List>
-            <Link to="/">
+            <Link to="/" className={classes.link}>
               <ListItem button key={1}>
                 <ListItemIcon>
-                  <HomeIcon className={classes.icon} />
+                  <HomeIcon
+                    className={classNames(classes.primary, classes.icon)}
+                  />
                   {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
                 </ListItemIcon>
-                <ListItemText primary={"Home"} />
+                <ListItemText
+                  disableTypography={true}
+                  primary={"Home"}
+                  className={classes.primary}
+                />
               </ListItem>
             </Link>
-            <Link to="/Addalert">
+            <Link to="/Addalert" className={classes.link}>
               <ListItem button key={3}>
                 <ListItemIcon>
-                  <AddAlert className={classes.icon} />
+                  <AddAlert
+                    className={classNames(classes.primary, classes.icon)}
+                  />
                   {/* {index % 2 === 0 ? <InboxIcon /> : } */}
                 </ListItemIcon>
-                <ListItemText primary={"ADD ALERT"} />
+                <ListItemText
+                  primary={"ADD ALERT"}
+                  disableTypography={true}
+                  className={classes.primary}
+                />
               </ListItem>
             </Link>
-            <Link to="/Favoritalert">
+            <Link to="/Favoritalert" className={classes.link}>
               <ListItem button key={2}>
                 <ListItemIcon>
-                  <NotificationsActive className={classes.icon} />
+                  <NotificationsActive
+                    className={classNames(classes.icon, classes.primary)}
+                  />
                 </ListItemIcon>
-                <ListItemText primary={"FAVORIT ALLRETS"} />
+                <ListItemText
+                  primary={"FAVORIT ALLRETS"}
+                  disableTypography={true}
+                  className={classes.primary}
+                />
               </ListItem>
             </Link>
           </List>
@@ -159,6 +177,7 @@ const styles = theme => ({
       duration: theme.transitions.duration.leavingScreen
     })
   },
+  color: { color: `#ffffff` },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
@@ -175,11 +194,14 @@ const styles = theme => ({
     display: "none"
   },
   drawer: {
+    // color: `#ff`,
     width: drawerWidth,
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    backgroundColor: `#482c4e`
+    // color: `#ffffff`
   },
   drawerHeader: {
     display: "flex",
@@ -187,6 +209,7 @@ const styles = theme => ({
     padding: "0 8px",
     ...theme.mixins.toolbar,
     justifyContent: "flex-end"
+    // color: `#ffffff`
   },
   content: {
     flexGrow: 1,
@@ -204,11 +227,16 @@ const styles = theme => ({
     }),
     marginLeft: 0
   },
+  primary: {
+    color: grey[200]
+  },
+  link: { backgroundColor: `transparent`, textDecoration: `none` },
+  dark: { backgroundColor: grey[900] },
   icon: {
     margin: theme.spacing.unit * 2,
-
+    // primary: grey[200],
     "&:hover": {
-      color: red[800]
+      color: grey[200]
     }
   },
   iconHover: {

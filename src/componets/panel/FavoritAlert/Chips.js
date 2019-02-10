@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
 import Paper from "@material-ui/core/Paper";
-import TagFacesIcon from "@material-ui/icons/TagFaces";
-import FavoritAlert from "./FavoritAlert";
+
 import { NameMarket } from "../forms/Data";
 import Snackbars from "./Snackbars";
 import Grid from "@material-ui/core/Grid";
-
+import Help from "@material-ui/icons/HelpOutline";
+import { Tooltip } from "@material-ui/core";
 const styles = theme => ({
   root: {
     display: "flex",
@@ -17,7 +17,9 @@ const styles = theme => ({
     padding: theme.spacing.unit / 2
   },
   label: {
-    justifyContent: "center",
+    display: "flex",
+    justifyContent: "flex-start",
+    // justifyContent: "center",
 
     [theme.breakpoints.down("sm")]: {
       padding: `2%`
@@ -25,6 +27,14 @@ const styles = theme => ({
     [theme.breakpoints.up("md")]: {
       padding: `3%`
     }
+  },
+  info: {
+    display: "flex",
+    justifyContent: "flex-end",
+    flexWrap: "nowrap",
+    margin: theme.spacing.unit,
+    marginLeft: `8vw`
+    // paddingRight: theme.spacing.unit
   },
   chip: {
     margin: theme.spacing.unit
@@ -92,9 +102,17 @@ class ChipsArray extends React.Component {
           justify="center"
           alignItems="flex-start"
         >
-          <Grid item xs={12}>
+          <Grid item xs={8}>
             <h3 className={classes.label}>Favorit Coins:</h3>
-            {/* wystylować */}
+          </Grid>
+          <Grid item xs={2} className={classes.info}>
+            <Tooltip
+              // className={classes.info}
+              title="if you delete a coin with a list, you must add in bookmark Add alert"
+              placement="left-start"
+            >
+              <Help />
+            </Tooltip>
           </Grid>
           {favorite.map((data, i) => {
             return (

@@ -34,14 +34,17 @@ class Vol extends Component {
       ff: []
     };
   }
-  componentWillUnmount = () => {
-    clearInterval(this.Interval);
+  componentWillUnmount = async () => {
+    await clearInterval(this.Interval);
   };
-
+  componentDidCatch = () => {
+    return <div>Sorry</div>;
+  };
   componentDidMount = async () => {
-    this.api();
-    this.LoadFavorites(NameMarket);
-    this.Interval = setInterval(await this.api, 10000, () => {
+    await this.LoadFavorites(NameMarket);
+    await this.api();
+
+    this.Interval = setInterval(await this.api, 300000, () => {
       this.setState({ loading: true });
     });
   };
@@ -77,21 +80,21 @@ class Vol extends Component {
         headvol = vol[lengthv - 1],
         b = [],
         prc;
-      //   console.log(fav, "f");
+
       const [head] = headvol;
       const [last] = lastvol;
       if (lengthv < 3) {
         for (let i in head) {
-          prc = ((last[i].volBTC - head[i].volBTC) / head[i].volBTC) * 100;
-          if (isNaN(prc)) prc = 0;
-          b.push({
-            id: i,
-            MarketName: head[i].martet,
-            Procenty: parseFloat(prc.toFixed(2)),
-            TimeStamp: head[i].TimeStamp
-          });
+          //   prc = ((last[i].volBTC - head[i].volBTC) / head[i].volBTC) * 100;
+          //   if (isNaN(prc)) prc = 0;
+          // b.push({
+          //   id: i,
+          //   MarketName: head[i].martet,
+          //   Procenty: parseFloat(prc.toFixed(2)),
+          //   TimeStamp: head[i].TimeStamp
+          // });
           f.forEach(({ Marked, Change, Time }) => {
-            if (Marked === head[i].MarketName) {
+            if (Marked === head[i].martet) {
               fav.push({
                 Marked: Marked,
                 Change: Change,
@@ -100,14 +103,13 @@ class Vol extends Component {
               });
             }
           });
-          //   console.log(i);
-          // console.log(
-          //   `{id:${i},name: '${head[i].martet}', value: '${head[i].martet}'},`
-          // );
+
+          //   // console.log(
+          //   //   `{id:${i},name: '${head[i].martet}', value: '${head[i].martet}'},`
+          //   // );
         }
       } else {
         for (let i in f) {
-          //   console.log(i, "pod f");
           let ii = fav[i].id;
           prc = ((last[ii].volBTC - head[ii].volBTC) / head[ii].volBTC) * 100;
           if (isNaN(prc)) prc = 0;
@@ -121,19 +123,7 @@ class Vol extends Component {
       }
       //up vol
 
-      b.filter((element, index) => {
-        // if (lengthv < 3) {
-        //   f.forEach(({ Marked, Change, Time }) => {
-        //     if (Marked === element.MarketName) {
-        //       fav.push({
-        //         Marked: Marked,
-        //         Change: Change,
-        //         Time: Time,
-        //         id: index
-        //       });
-        //     }
-        //   });
-        // }
+      b.filter(element => {
         if (element.Procenty === 0) {
           return;
         } else {
@@ -150,7 +140,7 @@ class Vol extends Component {
 
       // console.log(upchange, "up");
       // console.log(downchange, "down");
-      //   console.log(updown, "updown");
+      // console.log(updown, "updown");
       //   console.log(fav, "fav");
       return {
         changevol: b,

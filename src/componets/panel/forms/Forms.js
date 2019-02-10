@@ -90,13 +90,13 @@ class Forms extends Component {
                 alignItems="flex-start"
               >
                 {" "}
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={12}>
                   <label className={classes.label}> Marked</label>
                   {errors.Marked && (
                     <div className={classes.err}>{errors.content}</div>
                   )}
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={12}>
                   <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="Marked">Select Marked</InputLabel>
                     <Select
@@ -117,13 +117,13 @@ class Forms extends Component {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={12}>
                   <label className={classes.label}> Change</label>
                   {errors.Change && (
                     <div className={classes.err}>{errors.content}</div>
                   )}
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={12}>
                   <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="Change">Select Change</InputLabel>
                     <Select
@@ -144,13 +144,13 @@ class Forms extends Component {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={12}>
                   <label className={classes.label}> Time</label>
                   {errors.Time && (
                     <div className={classes.err}>{errors.content}</div>
                   )}
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={12}>
                   <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="Time">Select Time</InputLabel>
                     <Select
@@ -199,13 +199,17 @@ const styles = theme => ({
   formControl: {
     [theme.breakpoints.down("sm")]: {
       margin: theme.spacing.unit * 3,
-      minWidth: 150
-      // width: `50%`
+      marginLeft: theme.spacing.unit * 6,
+      marginRight: theme.spacing.unit * 6,
+      minWidth: 150,
+      width: `${70}vw`
     },
     [theme.breakpoints.up("md")]: {
       margin: theme.spacing.unit * 2,
+      marginLeft: theme.spacing.unit * 6,
+      marginRight: theme.spacing.unit * 6,
       minWidth: 300,
-      width: `50%`
+      width: `70vw`
     }
   },
   selectEmpty: {
