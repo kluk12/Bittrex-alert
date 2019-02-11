@@ -36,7 +36,7 @@ class Vol extends Component {
 
   componentDidMount = async () => {
     this.api();
-    this.Interval = setInterval(await this.api, 20000, () => {
+    this.Interval = setInterval(await this.api, 60000, () => {
       this.setState({ loading: true });
     });
   };

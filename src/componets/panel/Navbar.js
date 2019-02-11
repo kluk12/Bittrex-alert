@@ -22,7 +22,7 @@ import NotificationsActive from "@material-ui/icons/NotificationsActive";
 import { Link } from "react-router-dom";
 import { Routes } from "./Route";
 import { Route, BrowserRouter } from "react-router-dom";
-import { red, grey } from "@material-ui/core/colors";
+import { red, grey, blue } from "@material-ui/core/colors";
 const drawerWidth = 240;
 class PersistentDrawerLeft extends React.Component {
   state = {
@@ -236,11 +236,15 @@ const styles = theme => ({
     margin: theme.spacing.unit * 2,
     // primary: grey[200],
     "&:hover": {
-      color: grey[200]
+      color: blue[400]
     }
   },
+
   iconHover: {
-    margin: theme.spacing.unit * 2
+    margin: theme.spacing.unit * 2,
+    "&:hover": {
+      color: blue[400]
+    }
   }
 });
 
