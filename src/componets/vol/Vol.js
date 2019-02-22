@@ -51,7 +51,10 @@ class Vol extends Component {
       .then(response => {
         this.marketVol(response.data.result);
       })
-      .then(this.change())
+      .then(
+        this.change(),
+        window.scroll({ top: 25000, left: 0, behavior: "smooth" })
+      )
       .catch(error => {
         this.setState({ error });
       });

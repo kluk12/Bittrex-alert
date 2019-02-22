@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Paper from "@material-ui/core/Paper";
@@ -88,7 +87,7 @@ class Alert extends Component {
             </Grid>
           </Grid>
         </Paper>
-        {window.scrollTo(0, 20000)}
+        {/* {window.scroll({ left: 25000, behavior: "smooth" })} */}
       </div>
     );
   }

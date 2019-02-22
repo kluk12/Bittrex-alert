@@ -33,6 +33,7 @@ You can also add the currency to your favorites and follow only the coins from t
 ## Quick Start
 
 ```bash
+
 Install packages via NPM
 
     npm install
@@ -40,6 +41,5 @@ Install packages via NPM
 Run project
 
     npm start
-
 
 ```
